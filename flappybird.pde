@@ -50,7 +50,7 @@ void draw() {
   //pillars
   
   if (pspawntimer == 0) {
-    int updown = (int)(random(0,2)); //height difference deviation
+    int updown = (int)(random(0,2)); //height difference deviation decider
     if (updown == 1){
       if (h-30 >= 0){
         h -= 30;
@@ -74,7 +74,7 @@ void draw() {
 
   for (int i = pillars.size()-1; i > 0; i--) {
     Pillar pillar = pillars.get(i);
-    if (pillar.hitBoxDetect(bird.x, bird.y, bird.w)) { //mouseX/Y is a placeholder, replace with player coordinates
+    if (pillar.hitBoxDetect(bird.x, bird.y, bird.w)) {
       //println("Detected");
       exit();
     }
@@ -91,7 +91,7 @@ void draw() {
   //outofbounds
   
   if(bird.y < 0 || bird.y > height){
-    exit();
+    exit(); //remove this if you find it too annoying
   }
   
   count--;
