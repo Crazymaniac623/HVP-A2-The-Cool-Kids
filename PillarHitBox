@@ -1,5 +1,4 @@
 //Pillar Class w/ Hitbox Detection
-//Current Bugs: When moving the box the hitbox doesnt change
 //Everthing Below this is for bug testing, can be removed
 float x, y, w , h;
 Pillar pillar;
@@ -12,6 +11,7 @@ void setup(){
   w = width/2;
   h = height/2;
   pillar = new Pillar(x, y, w, h);
+  
   println("started");
   
 }
@@ -26,9 +26,12 @@ void draw(){
     println("Detected");
   }
   if (mousePressed){
-    x+=5;
+   pillar.pillarMovement();
+   x+=5;
   }
+  
   rect(x, y, w, h);
+  
   count--;
 }
 
@@ -51,4 +54,10 @@ class Pillar{
     }
     return false;
   }
+  
+  void pillarMovement(){
+    x+=5; //placeholder
+  }
 }
+
+
