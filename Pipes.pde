@@ -2,6 +2,7 @@
 
 import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 private int topLength;
 private int bottomLength;
@@ -13,7 +14,18 @@ public Pipes( int screenHeight, int screenWidth )
   hPos = screenWidth;
 }
 
-//Add method to move pipes to the left every *insert time interval*
+public void movePipes()
+{
+  Timer timer = new Timer();
+  timer.schedule( new TimerTask() 
+  {
+    @Override
+    public void run()
+    {
+      hPos--;
+    }
+  }, 0, 1000 ); //Moves 1 left every second
+}
 
 public void setLengths( int screenHeight )
 {
