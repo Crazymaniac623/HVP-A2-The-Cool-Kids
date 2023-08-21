@@ -1,31 +1,46 @@
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class Bird
+/**
+ * Write a description of class Bird here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+
+import java.io.File;
+import java.net.URL;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.imageio.ImageIO;
+
+import javax.swing.*;
+
+public class Bird extends MovingThing
 {
-	private int height;
+    // instance variables - replace the example below with your own
+    private int height;
+    private Image image;
 
-	//Bird screenHeight Constructor
-	public Bird( int screenHeight )
-	{
-	   	height = screenHeight / 2;
-	}
-	
-	//gravity Method - Raise height value by 1 every half second (Visually goes down)
-	public void gravity()
-	{
-	  	height ++;
-	}
-	
-	//up Method - Decrease height value by 15 (visually goes up)
-	public void up()
-	{
-	  	height -= 15;
-	}
-	
-	//getHeight Method - Return value of height
-	public int getHeight()
-	{
-	  	return height; 
-	}
+    /**
+     * Constructor for objects of class Bird
+     */
+    public Bird( int screenHeight )
+    {
+        height = screenHeight / 2;
+    }
+    
+    public void gravity()
+    {
+        height++;
+    }
+    
+    public void up()
+    {
+        height -= 15;
+    }
+    
+    public int getHeight()
+    {
+        return height;
+    }
 }
