@@ -1,7 +1,7 @@
 class Brick {
   boolean passed = false;
   float x, yTop, yBottom;
-  float speed = 8;
+  float speed = 5;
   float width = 70;
   float gap = 200; // Gap between top and bottom bricks
   float spacing = 500; // Adjust this value to change the distance between bricks

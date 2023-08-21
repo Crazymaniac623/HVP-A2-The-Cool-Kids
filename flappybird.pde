@@ -3,17 +3,17 @@
 float x5;
 float y5;
 float velocity = 0;
-float jumpStrength = -7;
-float gravity = 0.35;
+float jumpStrength = -15;
+float gravity = 0.981;
 int score = 0;
-int delay = 0;
+int delay = 5;
 boolean isGameOver = false; 
 boolean passed = false;
 
 Birb playerx;
 Brick[] bricks;
 
-int brickCount = 8; // number of visible bricks (i don't think it works rn tho lol)
+int brickCount = 4; // number of visible bricks (i don't think it works rn tho lol)
 
 void setup() {
   fullScreen();
@@ -72,6 +72,7 @@ void updateBirdPosition() {
   if (y5 > height - playerx.r/2) { //playerx.r/2 cus half radius of circle
     y5 = height - playerx.r/2;
     velocity = 0;
+    gameOver();
   } else if (y5 < playerx.r/2) {
     y5 = playerx.r/2;
     velocity = 0;
