@@ -18,7 +18,8 @@ Menu menu;
 
 /*
 scroll down for the classes (im too lazy to put them into seperate scripts)
- */
+also most of the code should be usable in BlueJ apart from the text, random, void draw() and void setup(). Just take the classes and fix them to be usable in BlueJ
+*/
 
 void setup() {
   size(640, 360);
