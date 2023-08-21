@@ -1,168 +1,106 @@
-float x, y, w;
-float h, hb;
-float s;
-int gapsize = 150;
-ArrayList<Pillar>pillars;
-int count = 60;
-int pspawntimer = 120;
-int time = 0;
-int starttime = 60;
-Bird bird;
+//many code stolen from my past processing projects :)
 
-/*
-Oh yea slight note before you play if you even read the code beforehand the game will force 
-exit when you lose (going out of bounds or touching the pillars) because I am currently too 
-lazy to code a restart screen and main menu states.
+float x5;
+float y5;
+float velocity = 0;
+float jumpStrength = -7;
+float gravity = 0.35;
+int score = 0;
+int delay = 0;
+boolean isGameOver = false; 
+boolean passed = false;
 
-Also excuse the spaghetti code you see below i will hopefully not be too lazy to not clean it up
-*/
+Birb playerx;
+Brick[] bricks;
+
+int brickCount = 8; // number of visible bricks (i don't think it works rn tho lol)
 
 void setup() {
-  size(640, 360);
-  s = 4; //speed
-  y = 0;
-  w = 50;
-  x = width + w;
-  h = random(1)*height/2;
-  pillars = new ArrayList<Pillar>();
-  bird = new Bird(width/6, height/2, 25, 0.15, 4); // last 2 variables change gravity and jump
-  println(h);
+  fullScreen();
+  playerx = new Birb(width - width + 50, height / 2, 50);
+  bricks = new Brick[brickCount];
+  
+  for (int i = 0; i < brickCount; i++) {
+    bricks[i] = new Brick(width + i * width * 3);
+  }
 }
 
 void draw() {
-  background(0);
-  //troubleshooter vvv
-  /*
-  if (count == 0) {
-    println(mouseX, mouseY);
-    count = 60;
-    time++;
-    println(time);
-  }
-*/
-  
-  //bird player
-  bird.display();
-  if (starttime == 0){
-    bird.movement();
-  }
-  
-  //pillars
-  
-  if (pspawntimer == 0) {
-    int updown = (int)(random(0,2)); //height difference deviation decider
-    if (updown == 1){
-      if (h-30 >= 0){
-        h -= 30;
-      } else {
-        h += 30;
+  background(200);
+  fill(155, 50, 10);
+  textSize(100);
+  text(score, width-100, 100); 
+  if (!isGameOver) {
+    playerx.display();
+    updateBirdPosition();
+
+    for (Brick brick : bricks) {
+      brick.update();
+      brick.display();
+
+      if (playerx.isTouching(brick)) { //detection
+        gameOver(); 
       }
-    } else if (updown == 0){
-      if (h+30+gapsize <= height){
-        h += 30;
-      } else {
-        h -= 30;
+      
+      if (brick.x + brick.width < playerx.x && !brick.passed) {
+        score++; 
+        brick.passed = true;
       } 
     }
-    hb = h + gapsize;
-    pillars.add(new Pillar(x, y, w, h, s));
-    pillars.add(new Pillar(x, hb, w, height, s));
-    pspawntimer = 120;
-    
-    println(h);
-  }
-
-  for (int i = pillars.size()-1; i > 0; i--) {
-    Pillar pillar = pillars.get(i);
-    if (pillar.hitBoxDetect(bird.x, bird.y, bird.w)) {
-      //println("Detected");
-      exit();
-    }
-    //moving pillar
-    pillar.display();
-    pillar.pillarMovement(); 
-    
-    if(pillar.offScreen()){
-      pillars.remove(i);
-      //println("removal");
-    }
-  }
-  
-  //outofbounds
-  
-  if(bird.y < 0 || bird.y > height){
-    exit(); //remove this if you find it too annoying
-  }
-  
-  count--;
-  pspawntimer--;
-  if(starttime > 0){
-    starttime--;
-    text("Press Space to Flap (When this text disappears the game begins)", 100 , 20);
+  } else {
+    displayGameOver();
   }
 }
 
-class Pillar {
+void keyPressed() {
+  if(key == ' ')
+  {
+    delay++;
+  }
+  if (key == ' ' && !isGameOver && delay > 10000) {
+    velocity = jumpStrength; // apply jump strength
+    delay = 0;
+  } else if (key == ' ' && isGameOver) {
+    resetGame();
+  }
+} 
 
-  float x, y, w, h, s;
+void updateBirdPosition() { 
+  velocity += gravity;
+  y5 += velocity;
 
-  Pillar(float x, float y, float w, float h, float s) {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-    this.s = s;
+  if (y5 > height - playerx.r/2) { //playerx.r/2 cus half radius of circle
+    y5 = height - playerx.r/2;
+    velocity = 0;
+  } else if (y5 < playerx.r/2) {
+    y5 = playerx.r/2;
+    velocity = 0;
   }
 
-  boolean hitBoxDetect(float xpos, float ypos, float wid) {
-    if (xpos+wid > x && xpos+wid < (x + w) && ypos > y && ypos < (y + h) || xpos+wid > x && xpos+wid < (x + w) && ypos+wid-5 > y && ypos+wid-5 < (y + h)) { //god damn this is way too long
-      return true;
-    }
-    return false;
-  }
+  playerx.move(0, velocity);
+  playerx.y = y5;
+}
 
-  void pillarMovement() {
-    x-=2; //placeholder
-  }
-  
-  void display() {
-      rect(x, y, w, h);
-  }
-  
-  boolean offScreen(){
-    if(x < (0 - w)){
-      return true;
-    }
-    return false;
+void gameOver() {
+  isGameOver = true;
+}
+
+void resetGame() {
+  isGameOver = false;
+  y5 = height / 2;
+  velocity = 0;
+  score = 0;
+  for (Brick brick : bricks) {
+    brick.reset();
   }
 }
 
-class Bird {
-  
-  float x, y, w, gravity, jumpvelo;
-  PVector pos;
-  float g = 1;
-  float vy = 0;
-  
-  Bird(float x, float y, float w, float gravity, float jumpvelo){
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.gravity = gravity;
-    this.jumpvelo = jumpvelo;
-  }
-  
-  void movement(){
-    vy += gravity;
-    y += vy;
-    if (keyPressed && key == ' '){
-      vy = 0;
-      vy -= jumpvelo;
-    }
-  }
-  
-  
-  void display(){
-    square(x, y, w);
-  }
+void displayGameOver() {
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  fill(125, 55, 100);
+  text("You Lost", width / 2, height / 2 - 50);
+  textSize(24);
+  fill(0);
+  text("Press Space to Retry", width / 2, height / 2 + 50);
 }
