@@ -4,6 +4,7 @@ import javafx.stage.Screen;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.*;
 import javafx.event.ActionEvent;
@@ -28,6 +29,29 @@ public class BaseGame extends Application
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene( root, screenWidth, screenHeight );
 		stage.setScene( scene );
+		stage.setTitle( "FlappyBird" );
+
+		Button startBt = new Button( "START!" );
+		root.setCenter( startBt );
+		
+		startBt.setOnAction( new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle( ActionEvent event )
+			{
+				scene.setRoot( play( screenWidth, screenHeight ) );
+			}
+		} );
+
+		//GUI
+		scene.setRoot( root );
+		stage.show();
+	}
+
+	//play Method
+	public static BorderPane play( int screenWidth, int screenHeight )
+	{
+		BorderPane root = new BorderPane();
 
 		//Bird
 		Bird bird = new Bird( screenHeight );
@@ -80,7 +104,7 @@ public class BaseGame extends Application
 				bPipe1Rect.setX( pipe1.getHPos() );
 
 				//Pipe1 hitbox
-				if( ( pipe1.getHPos() <= birdRect.getX() + 19 && pipe1.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe1Rect.getY() + pipe1.getTopLength() || birdRect.getY() >= bPipe1Rect.getY() ) )
+				if( ( pipe1.getHPos() <= birdRect.getX() + 19 && pipe1.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe1Rect.getY() + pipe1.getTopLength() || birdRect.getY() + 19 >= bPipe1Rect.getY() ) )
 					timer.cancel();
 
 				//Loop pipe1
@@ -112,7 +136,7 @@ public class BaseGame extends Application
 				bPipe2Rect.setX( pipe2.getHPos() );
 
 				//Pipe2 hitbox
-				if( ( pipe2.getHPos() <= birdRect.getX() + 19 && pipe2.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe2Rect.getY() + pipe2.getTopLength() || birdRect.getY() >= bPipe2Rect.getY() ) )
+				if( ( pipe2.getHPos() <= birdRect.getX() + 19 && pipe2.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe2Rect.getY() + pipe2.getTopLength() || birdRect.getY() + 19 >= bPipe2Rect.getY() ) )
 					timer.cancel();
 
 				//Loop pipe2
@@ -142,7 +166,7 @@ public class BaseGame extends Application
 				bPipe3Rect.setX( pipe3.getHPos() );
 
 				//Pipe3 hitbox
-				if( ( pipe3.getHPos() <= birdRect.getX() + 19 && pipe3.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe3Rect.getY() + pipe3.getTopLength() || birdRect.getY() >= bPipe3Rect.getY() ) )
+				if( ( pipe3.getHPos() <= birdRect.getX() + 19 && pipe3.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe3Rect.getY() + pipe3.getTopLength() || birdRect.getY() + 19 >= bPipe3Rect.getY() ) )
 					timer.cancel();
 
 				//Loop pipe3
@@ -157,11 +181,9 @@ public class BaseGame extends Application
 	    		}
 	  	}, 12000, 20 ); //1000 = 1 second
 
-		//GUI
-		stage.setTitle( "FlappyBird" );
-		root.getChildren().addAll( birdRect, tPipe1Rect, bPipe1Rect, tPipe2Rect, bPipe2Rect, tPipe3Rect, bPipe3Rect );
 		root.setBottom( upBt );
-		scene.setRoot( root );
-		stage.show();
+		root.getChildren().addAll( birdRect, tPipe1Rect, bPipe1Rect, tPipe2Rect, bPipe2Rect, tPipe3Rect, bPipe3Rect );
+
+		return root;
 	}
 }
