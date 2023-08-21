@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.*;
 import javafx.event.ActionEvent;
@@ -31,7 +33,9 @@ public class BaseGame extends Application
 		stage.setScene( scene );
 		stage.setTitle( "FlappyBird" );
 
-		Button startBt = new Button( "START!" );
+		Image startImg = new Image( "ButtonUp_Play.png" );
+		ImageView startIV = new ImageView( startImg );
+		Button startBt = new Button( "", startIV );
 		root.setCenter( startBt );
 		
 		startBt.setOnAction( new EventHandler<ActionEvent>()
