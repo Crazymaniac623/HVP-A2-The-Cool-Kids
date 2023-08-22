@@ -33,7 +33,7 @@ public class BaseGame extends Application
 		stage.setScene( scene );
 		stage.setTitle( "FlappyBird" );
 
-		Image startImg = new Image( "ButtonUp_Play.png" );
+		Image startImg = new Image( "Images/ButtonUp_Play.png" );
 		ImageView startIV = new ImageView( startImg );
 		Button startBt = new Button( "", startIV );
 		root.setCenter( startBt );
@@ -60,6 +60,10 @@ public class BaseGame extends Application
 		//Bird
 		Bird bird = new Bird( screenHeight );
 		Rectangle birdRect = new Rectangle( screenWidth / 3, bird.getHeight(), 20, 20 );
+		Image birdDownImg = new Image( "Images/BirdDown_Duck.png" );
+		Image birdUpImg = new Image( "Images/BirdUp_Duck.png" );
+		birdRect.setFill( new ImagePattern( birdDownImg ) );
+
 		Timer timer = new Timer();
 	  	timer.schedule( new TimerTask() 
 	  	{
@@ -67,6 +71,7 @@ public class BaseGame extends Application
 	    		public void run()
 	    		{
 	      			bird.gravity();
+				birdRect.setFill( new ImagePattern( birdDownImg ) );
 	    		}
 	  	}, 0, 50 ); //1000 = 1 second
 
@@ -87,16 +92,21 @@ public class BaseGame extends Application
 			public void handle( ActionEvent event )
 			{
 				bird.up();
+				birdRect.setFill( new ImagePattern( birdUpImg ) );
 				birdRect.setY( bird.getHeight() );
 			}
 		} );
+
+		//Pipe graphic
+		Image lowerPipeImg = new Image( "Images/BarUpper_Blue.png" );
+		Image upperPipeImg = new Image( "Images/BarLower_Blue.png" );
 
 		//Pipe1
 		Pipes pipe1 = new Pipes( screenHeight, screenWidth );
 		Rectangle tPipe1Rect = new Rectangle( screenWidth, 0, 30, pipe1.getTopLength() );
 		Rectangle bPipe1Rect = new Rectangle( screenWidth, screenHeight - pipe1.getBottomLength(), 30, pipe1.getBottomLength() );
-		tPipe1Rect.setFill( Color.BLUE );
-		bPipe1Rect.setFill( Color.BLUE );
+		tPipe1Rect.setFill( new ImagePattern( upperPipeImg ) );
+		bPipe1Rect.setFill( new ImagePattern( lowerPipeImg ) );
 
 		timer.schedule( new TimerTask() 
 	  	{
@@ -127,8 +137,8 @@ public class BaseGame extends Application
 		Pipes pipe2 = new Pipes( screenHeight, screenWidth );
 		Rectangle tPipe2Rect = new Rectangle( screenWidth, 0, 30, pipe2.getTopLength() );
 		Rectangle bPipe2Rect = new Rectangle( screenWidth, screenHeight - pipe2.getBottomLength(), 30, pipe2.getBottomLength() );
-		tPipe2Rect.setFill( Color.RED );
-		bPipe2Rect.setFill( Color.RED );
+		tPipe2Rect.setFill( new ImagePattern( upperPipeImg ) );
+		bPipe2Rect.setFill( new ImagePattern( lowerPipeImg ) );
 
 		timer.schedule( new TimerTask() 
 	  	{
@@ -159,6 +169,8 @@ public class BaseGame extends Application
 		Pipes pipe3 = new Pipes( screenHeight, screenWidth );
 		Rectangle tPipe3Rect = new Rectangle( screenWidth, 0, 30, pipe3.getTopLength() );
 		Rectangle bPipe3Rect = new Rectangle( screenWidth, screenHeight - pipe3.getBottomLength(), 30, pipe3.getBottomLength() );
+		tPipe3Rect.setFill( new ImagePattern( upperPipeImg ) );
+		bPipe3Rect.setFill( new ImagePattern( lowerPipeImg ) );
 
 		timer.schedule( new TimerTask() 
 	  	{
