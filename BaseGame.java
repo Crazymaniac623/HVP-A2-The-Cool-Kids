@@ -161,7 +161,7 @@ public class BaseGame extends Application
 				bPipe1Rect.setX( pipe1.getHPos() );
 
 				//Pipe1 hitbox
-				if( ( pipe1.getHPos() <= birdRect.getX() + 19 && pipe1.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe1Rect.getY() + pipe1.getTopLength() || birdRect.getY() + 19 >= bPipe1Rect.getY() ) )
+				if( ( pipe1.getHPos() <= birdRect.getX() + 49 && pipe1.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe1Rect.getY() + pipe1.getTopLength() || birdRect.getY() + 49 >= bPipe1Rect.getY() ) )
 					timer.cancel();
 
 				//Loop pipe1
@@ -193,7 +193,7 @@ public class BaseGame extends Application
 				bPipe2Rect.setX( pipe2.getHPos() );
 
 				//Pipe2 hitbox
-				if( ( pipe2.getHPos() <= birdRect.getX() + 19 && pipe2.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe2Rect.getY() + pipe2.getTopLength() || birdRect.getY() + 19 >= bPipe2Rect.getY() ) )
+				if( ( pipe2.getHPos() <= birdRect.getX() + 49 && pipe2.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe2Rect.getY() + pipe2.getTopLength() || birdRect.getY() + 49 >= bPipe2Rect.getY() ) )
 					timer.cancel();
 
 				//Loop pipe2
@@ -225,7 +225,7 @@ public class BaseGame extends Application
 				bPipe3Rect.setX( pipe3.getHPos() );
 
 				//Pipe3 hitbox
-				if( ( pipe3.getHPos() <= birdRect.getX() + 19 && pipe3.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe3Rect.getY() + pipe3.getTopLength() || birdRect.getY() + 19 >= bPipe3Rect.getY() ) )
+				if( ( pipe3.getHPos() <= birdRect.getX() + 49 && pipe3.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe3Rect.getY() + pipe3.getTopLength() || birdRect.getY() + 49 >= bPipe3Rect.getY() ) )
 					timer.cancel();
 
 				//Loop pipe3
