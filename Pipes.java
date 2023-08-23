@@ -21,14 +21,14 @@ public class Pipes
 		hPos--;
 	}
 	
-	//setLengths Method - Randomise pipe lengths without overlap and at least a gap of 50
+	//setLengths Method - Randomise pipe lengths without overlap and at least a gap of 100
 	public void setLengths( int screenHeight )
 	{
 		Random gen = new Random();
 		topLength = 10 + gen.nextInt( screenHeight );
 		try
 		{
-			bottomLength = 10 + gen.nextInt( screenHeight - ( topLength + 50 ) );
+			bottomLength = 10 + gen.nextInt( screenHeight - ( topLength + 100 ) );
 		}
 		catch( Exception e )
 		{
