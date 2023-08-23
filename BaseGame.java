@@ -102,7 +102,7 @@ public class BaseGame extends Application
 
 		//Bird
 		Bird bird = new Bird( screenHeight );
-		Rectangle birdRect = new Rectangle( screenWidth / 3, bird.getHeight(), 20, 20 );
+		Rectangle birdRect = new Rectangle( screenWidth / 3, bird.getHeight(), 50, 50 );
 		Image birdDownImg = new Image( "Images/BirdDown_" + birdDesign + ".png" );
 		Image birdUpImg = new Image( "Images/BirdUp_" + birdDesign + ".png" );
 		birdRect.setFill( new ImagePattern( birdDownImg ) );
