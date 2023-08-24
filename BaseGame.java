@@ -141,15 +141,21 @@ public class BaseGame extends Application
 		} );
 
 		//Pipe graphic
-		Image lowerPipeImg = new Image( "Images/BarUpper_Blue.png" );
-		Image upperPipeImg = new Image( "Images/BarLower_Blue.png" );
+		Image lowerPipeTubeImg = new Image( "Images/BarLower_Tube.png" );
+		Image lowerPipeEndImg = new Image( "Images/BarLower_End.png" );
+		Image upperPipeTubeImg = new Image( "Images/BarUpper_Tube.png" );
+		Image upperPipeEndImg = new Image( "Images/BarUpper_End.png" );
 
 		//Pipe1
 		Pipes pipe1 = new Pipes( screenHeight, screenWidth );
-		Rectangle tPipe1Rect = new Rectangle( screenWidth, 0, 30, pipe1.getTopLength() );
-		Rectangle bPipe1Rect = new Rectangle( screenWidth, screenHeight - pipe1.getBottomLength(), 30, pipe1.getBottomLength() );
-		tPipe1Rect.setFill( new ImagePattern( upperPipeImg ) );
-		bPipe1Rect.setFill( new ImagePattern( lowerPipeImg ) );
+		Rectangle tPipe1Rect = new Rectangle( screenWidth, 0, 30, pipe1.getTopLength() - 10 );
+		Rectangle bPipe1Rect = new Rectangle( screenWidth, screenHeight - ( pipe1.getBottomLength() - 10 ), 30, pipe1.getBottomLength() - 10 );
+		Rectangle tPipe1EndRect = new Rectangle( screenWidth, pipe1.getTopLength() - 10, 30, 10 );
+		Rectangle bPipe1EndRect = new Rectangle( screenWidth, screenHeight - pipe1.getBottomLength(), 30, 10 );
+		tPipe1Rect.setFill( new ImagePattern( upperPipeTubeImg ) );
+		bPipe1Rect.setFill( new ImagePattern( lowerPipeTubeImg ) );
+		tPipe1EndRect.setFill( new ImagePattern( upperPipeEndImg ) );
+		bPipe1EndRect.setFill( new ImagePattern( lowerPipeEndImg ) );
 
 		timer.schedule( new TimerTask() 
 	  	{
@@ -158,10 +164,16 @@ public class BaseGame extends Application
 	    		{
 	      			pipe1.movePipes();
 				tPipe1Rect.setX( pipe1.getHPos() );
+				tPipe1EndRect.setX( pipe1.getHPos() );
 				bPipe1Rect.setX( pipe1.getHPos() );
+				bPipe1EndRect.setX( pipe1.getHPos() );
 
 				//Pipe1 hitbox
-				if( ( pipe1.getHPos() <= birdRect.getX() + 49 && pipe1.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe1Rect.getY() + pipe1.getTopLength() || birdRect.getY() + 49 >= bPipe1Rect.getY() ) )
+				if( ( pipe1.getHPos() <= birdRect.getX() + 49 && pipe1.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe1Rect.getY() + pipe1.getTopLength() + 10 || birdRect.getY() + 49 >= bPipe1Rect.getY() - 10 ) )
+					timer.cancel();
+
+				//Height limits
+				if( birdRect.getY() <= 0 || birdRect.getY() + 49 >= screenHeight )
 					timer.cancel();
 
 				//Loop pipe1
@@ -169,19 +181,29 @@ public class BaseGame extends Application
 				{
 					pipe1.setHPos( screenWidth );
 					pipe1.setLengths( screenHeight );
-					tPipe1Rect.setHeight( pipe1.getTopLength() );
-					bPipe1Rect.setHeight( pipe1.getBottomLength() );
-					bPipe1Rect.setX( screenHeight - pipe1.getBottomLength() );
+
+					tPipe1Rect.setHeight( pipe1.getTopLength() - 10 );
+					tPipe1EndRect.setX( tPipe1Rect.getX() );
+					tPipe1EndRect.setY( tPipe1Rect.getHeight() );
+
+					bPipe1Rect.setHeight( pipe1.getBottomLength() + 10 );
+					bPipe1Rect.setY( screenHeight - ( pipe1.getBottomLength() + 10 ) );
+					bPipe1EndRect.setX( bPipe1Rect.getX() );
+					bPipe1EndRect.setY( bPipe1Rect.getY() - 10 );
 				}
 	    		}
 	  	}, 0, 20 ); //1000 = 1 second
 
 		//Pipe2
 		Pipes pipe2 = new Pipes( screenHeight, screenWidth );
-		Rectangle tPipe2Rect = new Rectangle( screenWidth, 0, 30, pipe2.getTopLength() );
-		Rectangle bPipe2Rect = new Rectangle( screenWidth, screenHeight - pipe2.getBottomLength(), 30, pipe2.getBottomLength() );
-		tPipe2Rect.setFill( new ImagePattern( upperPipeImg ) );
-		bPipe2Rect.setFill( new ImagePattern( lowerPipeImg ) );
+		Rectangle tPipe2Rect = new Rectangle( screenWidth, 0, 30, pipe2.getTopLength() - 10 );
+		Rectangle bPipe2Rect = new Rectangle( screenWidth, screenHeight - ( pipe2.getBottomLength() - 10 ), 30, pipe2.getBottomLength() - 10 );
+		Rectangle tPipe2EndRect = new Rectangle( screenWidth, pipe2.getTopLength() - 10, 30, 10 );
+		Rectangle bPipe2EndRect = new Rectangle( screenWidth, screenHeight - pipe2.getBottomLength(), 30, 10 );
+		tPipe2Rect.setFill( new ImagePattern( upperPipeTubeImg ) );
+		bPipe2Rect.setFill( new ImagePattern( lowerPipeTubeImg ) );
+		tPipe2EndRect.setFill( new ImagePattern( upperPipeEndImg ) );
+		bPipe2EndRect.setFill( new ImagePattern( lowerPipeEndImg ) );
 
 		timer.schedule( new TimerTask() 
 	  	{
@@ -190,10 +212,16 @@ public class BaseGame extends Application
 	    		{
 	      			pipe2.movePipes();
 				tPipe2Rect.setX( pipe2.getHPos() );
+				tPipe2EndRect.setX( pipe2.getHPos() );
 				bPipe2Rect.setX( pipe2.getHPos() );
+				bPipe2EndRect.setX( pipe2.getHPos() );
 
 				//Pipe2 hitbox
-				if( ( pipe2.getHPos() <= birdRect.getX() + 49 && pipe2.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe2Rect.getY() + pipe2.getTopLength() || birdRect.getY() + 49 >= bPipe2Rect.getY() ) )
+				if( ( pipe2.getHPos() <= birdRect.getX() + 49 && pipe2.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe2Rect.getY() + pipe2.getTopLength() + 10 || birdRect.getY() + 49 >= bPipe2Rect.getY() - 10 ) )
+					timer.cancel();
+
+				//Height limits
+				if( birdRect.getY() <= 0 || birdRect.getY() + 49 >= screenHeight )
 					timer.cancel();
 
 				//Loop pipe2
@@ -201,19 +229,29 @@ public class BaseGame extends Application
 				{
 					pipe2.setHPos( screenWidth );
 					pipe2.setLengths( screenHeight );
-					tPipe2Rect.setHeight( pipe2.getTopLength() );
-					bPipe2Rect.setHeight( pipe2.getBottomLength() );
-					bPipe2Rect.setX( screenHeight - pipe2.getBottomLength() );
+
+					tPipe2Rect.setHeight( pipe2.getTopLength() - 10);
+					tPipe2EndRect.setX( tPipe2Rect.getX() );
+					tPipe2EndRect.setY( tPipe2Rect.getHeight() );
+
+					bPipe2Rect.setHeight( pipe2.getBottomLength() + 10 );
+					bPipe2Rect.setY( screenHeight - ( pipe2.getBottomLength() + 10 ) );
+					bPipe2EndRect.setX( bPipe2Rect.getX() );
+					bPipe2EndRect.setY( bPipe2Rect.getY() - 10 );
 				}
 	    		}
 	  	}, 6000, 20 ); //1000 = 1 second
 
 		//Pipe3
 		Pipes pipe3 = new Pipes( screenHeight, screenWidth );
-		Rectangle tPipe3Rect = new Rectangle( screenWidth, 0, 30, pipe3.getTopLength() );
-		Rectangle bPipe3Rect = new Rectangle( screenWidth, screenHeight - pipe3.getBottomLength(), 30, pipe3.getBottomLength() );
-		tPipe3Rect.setFill( new ImagePattern( upperPipeImg ) );
-		bPipe3Rect.setFill( new ImagePattern( lowerPipeImg ) );
+		Rectangle tPipe3Rect = new Rectangle( screenWidth, 0, 30, pipe3.getTopLength() - 10 );
+		Rectangle bPipe3Rect = new Rectangle( screenWidth, screenHeight - ( pipe3.getBottomLength() - 10 ), 30, pipe3.getBottomLength() - 10 );
+		Rectangle tPipe3EndRect = new Rectangle( screenWidth, pipe3.getTopLength() - 10, 30, 10 );
+		Rectangle bPipe3EndRect = new Rectangle( screenWidth, screenHeight - pipe3.getBottomLength(), 30, 10 );
+		tPipe3Rect.setFill( new ImagePattern( upperPipeTubeImg ) );
+		bPipe3Rect.setFill( new ImagePattern( lowerPipeTubeImg ) );
+		tPipe3EndRect.setFill( new ImagePattern( upperPipeEndImg ) );
+		bPipe3EndRect.setFill( new ImagePattern( lowerPipeEndImg ) );
 
 		timer.schedule( new TimerTask() 
 	  	{
@@ -222,10 +260,16 @@ public class BaseGame extends Application
 	    		{
 	      			pipe3.movePipes();
 				tPipe3Rect.setX( pipe3.getHPos() );
+				tPipe3EndRect.setX( pipe3.getHPos() );
 				bPipe3Rect.setX( pipe3.getHPos() );
+				bPipe3EndRect.setX( pipe3.getHPos() );
 
 				//Pipe3 hitbox
-				if( ( pipe3.getHPos() <= birdRect.getX() + 49 && pipe3.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe3Rect.getY() + pipe3.getTopLength() || birdRect.getY() + 49 >= bPipe3Rect.getY() ) )
+				if( ( pipe3.getHPos() <= birdRect.getX() + 49 && pipe3.getHPos() + 29 >= birdRect.getX() ) && ( birdRect.getY() <= tPipe3Rect.getY() + pipe3.getTopLength() + 10 || birdRect.getY() + 49 >= bPipe3Rect.getY() - 10 ) )
+					timer.cancel();
+
+				//Height limits
+				if( birdRect.getY() <= 0 || birdRect.getY() + 49 >= screenHeight )
 					timer.cancel();
 
 				//Loop pipe3
@@ -233,15 +277,21 @@ public class BaseGame extends Application
 				{
 					pipe3.setHPos( screenWidth );
 					pipe3.setLengths( screenHeight );
-					tPipe3Rect.setHeight( pipe3.getTopLength() );
-					bPipe3Rect.setHeight( pipe3.getBottomLength() );
-					bPipe3Rect.setX( screenHeight - pipe3.getBottomLength() );
+
+					tPipe3Rect.setHeight( pipe3.getTopLength() + 10 );
+					tPipe3EndRect.setX( tPipe3Rect.getX() );
+					tPipe3EndRect.setY( tPipe3Rect.getHeight() );
+
+					bPipe3Rect.setHeight( pipe3.getBottomLength() - 10 );
+					bPipe3Rect.setY( screenHeight - ( pipe3.getBottomLength() + 10 ) );
+					bPipe3EndRect.setX( bPipe3Rect.getX() );
+					bPipe3EndRect.setY( bPipe3Rect.getY() - 10 );
 				}
 	    		}
 	  	}, 12000, 20 ); //1000 = 1 second
 
 		root.setBottom( upBt );
-		root.getChildren().addAll( birdRect, tPipe1Rect, bPipe1Rect, tPipe2Rect, bPipe2Rect, tPipe3Rect, bPipe3Rect );
+		root.getChildren().addAll( birdRect, tPipe1Rect, tPipe1EndRect, bPipe1Rect, bPipe1EndRect, tPipe2Rect, tPipe2EndRect, bPipe2Rect, bPipe2EndRect, tPipe3Rect, tPipe3EndRect, bPipe3Rect, bPipe3EndRect );
 
 		return root;
 	}
