@@ -8,7 +8,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.*;
 import javafx.event.*;
 import javafx.geometry.*;
-import java.util.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Formatter;
+import java.io.*;
+import javax.swing.*;
+import javax.sound.sampled.*;
 
 public class BaseGame extends Application
 {
@@ -98,6 +103,15 @@ public class BaseGame extends Application
 	//play Method
 	public static BorderPane play( int screenWidth, int screenHeight, String birdDesign )
 	{
+		try
+		{
+			playMusic();
+		}
+		catch( Exception e )
+		{
+			System.out.println( "whoops!" );
+		}
+
 		BorderPane root = new BorderPane();
 
 		//Bird
@@ -295,4 +309,17 @@ public class BaseGame extends Application
 
 		return root;
 	}
+
+	public static void playMusic() throws IOException,javax.sound.sampled.LineUnavailableException,javax.sound.sampled.UnsupportedAudioFileException
+    	{
+		File musicpath = new File( "music.wav" );
+		if( musicpath.exists() )
+		{
+			AudioInputStream audioinput = AudioSystem.getAudioInputStream( musicpath );
+                	Clip clip = AudioSystem.getClip();
+                	clip.open( audioinput );
+                	clip.start();
+                	clip.loop( Clip.LOOP_CONTINUOUSLY );
+            	}
+    	}
 }
